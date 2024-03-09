@@ -58,6 +58,7 @@ contract Minting is ERC721Enumerable, Ownable {
     }
 
     _safeMint(msg.sender, supply + 1);
+    _tokenExists[supply + 1] = true;
 
     minted.push(
         SaleStruct(
@@ -94,11 +95,11 @@ function tokenURI(uint256 tokenId)
         : "";
 }
 
-function toImage(uint256 tokenId) internal view returns (string memory) {
-       string memory currentBaseURI = _baseURI();
-       return bytes(currentBaseURI).length > 0
-        ? string(abi.encodePacked(currentBaseURI, Strings.toString(tokenId), baseExtension))
-           : "";
+function toImage(uint256 tokenId, string memory extension) public view returns (string memory) {
+    string memory currentBaseURI = _baseURI();
+    return bytes(currentBaseURI).length > 0
+        ? string(abi.encodePacked(currentBaseURI, Strings.toString(tokenId), extension))
+        : "";
 }
 
 // Display function
