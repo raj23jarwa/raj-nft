@@ -33,7 +33,7 @@ const Artworks = () => {
             <div className="w-4/5 mx-auto">
                 <h4 className="text-gradient uppercase text-2xl">Artworks</h4>
 
-                <div className="flex flex-wrap justify-start items-center mt-4 gap-6">
+                <div className="flex flex-wrap justify-center items-center mt-4 gap-6 md:flex-wrap lg:flex-wrap">
                     {imageUrls.map((imageUrl,index) => (
                         <div
                             key={index}
