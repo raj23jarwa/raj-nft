@@ -1,4 +1,4 @@
-import abi from './abis/src/contracts/minting.sol/Minting.json'
+import abi from './abis/src/contracts/Minting.sol/Minting.json'
 import address from './abis/contractAddress.json'
 import { getGlobalState, setGlobalState } from './store'
 import { ethers } from 'ethers'
@@ -90,7 +90,7 @@ const loadNfts = async () => {
     const nfts = await contract.getAllNFTs()
  
     setGlobalState('nfts', structuredNfts(nfts))
-  //   console.log( structuredNfts(nfts))
+    console.log( structuredNfts(nfts))
 
   } catch (error) {
     reportError(error)

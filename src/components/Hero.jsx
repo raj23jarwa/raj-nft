@@ -11,7 +11,7 @@ import { truncate } from '../store';
 
 const Hero = () => {
     const [nfts] =useGlobalState('nfts')
-    const onMint = async() =>{
+    const onMintNFT = async() =>{
         setGlobalState('loading',{
             show:true,
             msg: 'Minting New Nft to your account'
@@ -74,7 +74,7 @@ const Hero = () => {
                     <p className='text-sm mt-3 shadow-xl font-semibold'>Mint and collect the hottest Nfts</p>
                     <button 
                     className='shadow-xl mt-2  shadow-black bg-[#e32970] hover:bg-[#bd255f] text-white text-sm rounded-lg space-x-2 p-2'
-                    onClick={onMint}>
+                    onClick={onMintNFT}>
                         Mint Now 
                     </button>
                     <a

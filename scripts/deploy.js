@@ -6,7 +6,7 @@ const fs = require('fs')
 async function main() {
     const base_uri = 'https://ipfs.io/ipfs/QmTWbe9wDns7aqZQNCuWh5PqybGbBF91kngC5Zf8qmCoyg/';
     
-  const contract_name = 'minting';
+  const contract_name = 'Minting';
   const Contract = await ethers.getContractFactory(contract_name);
   const contract = await Contract.deploy('rajnft','RJM',base_uri);
 

@@ -12,8 +12,13 @@ const ALCHEMY_API_URL= VITE_ALCHEMY_API_URL;
 // const ALCHEMY_API_KEY = VITE_ALCHEMY_API_KEY;
 const SEPOLIA_PRIVATE_KEY = VITE_PRIVATE_KEY;
 module.exports = {
-
+  defaultNetwork: "localhost",
 	networks: {
+    hardhat: {
+    },
+    localhost: {
+      url: "http://127.0.0.1:8545"
+    },
 		sepolia: {
 			url: ALCHEMY_API_URL,
 			accounts: [`${SEPOLIA_PRIVATE_KEY}`],
@@ -41,4 +46,4 @@ module.exports = {
 }
   
 
-// my contract address:0x7f8d5ef0b2655a965da1b9316164460c4e5edd6e65538ce73bd32e7d497923b7
+// my contract address:0x5FbDB2315678afecb367f032d93F642f64180aa3

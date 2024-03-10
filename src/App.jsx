@@ -6,22 +6,30 @@ import Hero from "./components/Hero"
 import Loader from "./components/Loader"
 import { useEffect } from "react"
 import { isWallectConnected, loadNfts } from "./Minting"
+import { useGlobalState } from './store'
+
 
 const App = () => {
-  useEffect(async() => {
-  await isWallectConnected().then(()=>console.log("Blockchain is loaded"))
-  await loadNfts()
-  }, [])
+  const [nfts] =useGlobalState('nfts');
+  useEffect(() => {
+    const fetchData = async () => {
+      await isWallectConnected().then(() => console.log("Blockchain is loaded"));
+      await loadNfts();
+    };
+    
+    fetchData();
+  }, []);
+  
   
   return (
     <div className="min-h-screen">
       <div className="gradient">
       <Header/>   
        <Hero/>
-       <Artworks/>
+       <Artworks  artworks={nfts}/>
        <Footer/>
-       <Alert/>
        <Loader/>
+       <Alert/>
       </div>
      </div>
   )
