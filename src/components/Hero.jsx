@@ -4,8 +4,25 @@ import { FaGithub } from 'react-icons/fa'
 import { FaLinkedin } from 'react-icons/fa'
 import { FaTwitter } from 'react-icons/fa'
 import { HiOutlineMail } from 'react-icons/hi'
+import { setAlert, setGlobalState, setLoadingMsg, useGlobalState } from '../store'
+import { payToMint } from '../Minting'
+import { truncate } from '../store';
+
 
 const Hero = () => {
+    const [nfts] =useGlobalState('nfts')
+    const onMint = async() =>{
+        setGlobalState('loading',{
+            show:true,
+            msg: 'Minting New Nft to your account'
+        })
+
+        await payToMint()
+        .then(()=> setAlert('Minting successfull...', 'green'))
+        .catch(() => setGlobalState('loading' ,{show:false,msg:''}))
+    }
+    const [connectedAccount] = useGlobalState('connectedAccount')
+
     const links = [
         {
             id: 1,
@@ -55,7 +72,9 @@ const Hero = () => {
                         <span className=''>Collection</span>
                     </h1>
                     <p className='text-sm mt-3 shadow-xl font-semibold'>Mint and collect the hottest Nfts</p>
-                    <button className='shadow-xl mt-2  shadow-black bg-[#e32970] hover:bg-[#bd255f] text-white text-sm rounded-lg space-x-2 p-2'>
+                    <button 
+                    className='shadow-xl mt-2  shadow-black bg-[#e32970] hover:bg-[#bd255f] text-white text-sm rounded-lg space-x-2 p-2'
+                    onClick={onMint}>
                         Mint Now 
                     </button>
                     <a
@@ -67,7 +86,8 @@ const Hero = () => {
                             src={avatar}
                             alt="owner" />
                         <div className='flex flex-col font-semibold text-sm text-white'>
-                            <span> 0x5f...146a</span>
+                            {/* <span> 0x5f...146a</span> */}
+                            <span>{truncate(connectedAccount,4,4,11)}</span>
                             <span className='text-[#e32970]'>rajkumar</span>
                         </div>
                     </a>
@@ -92,7 +112,7 @@ const Hero = () => {
                                    cursor-pointer p-3 ml-[50%] mt-2 text-black hover:bg-[#bd255f] 
                                     hover:text-white transition-all duration-75 delay-100'>
                         <span className='text-sm font-bold '>
-                            99
+                           {nfts.length}/99
                         </span>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ const { ethereum } = window
 const contractAddress = address.address
 console.log("contractAddress",address)
 const contractAbi = abi.abi;
+console.log("contract abi is:" ,contractAbi)
 const opensea_uri = `https://testnets.opensea.io/assets/sepolia/${contractAddress}/`;
 
 // Retrieving contract from chain
@@ -72,7 +73,36 @@ const payToMint = async () => {
         from: connectedAccount,
         value: amount._hex,
       })
-   
+      window.location.reload();
+
+    } catch (error) {
+      reportError(error)
+    }
+   }
+
+   //    Loading Nfts
+
+const loadNfts = async () => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+ 
+    const contract = getEtheriumContract()
+    const nfts = await contract.getAllNFTs()
+ 
+    setGlobalState('nfts', structuredNfts(nfts))
+  //   console.log( structuredNfts(nfts))
+
+  } catch (error) {
+    reportError(error)
+  }
+ }
+
+//  error reporting 
+const reportError = (error) => {
+  console.log(error.message)
+  throw new Error('No ethereum object.')
+ }
+
 
     //   Restructuring NFts
     const structuredNfts = (nfts) =>nfts.map((nft) => ({
@@ -85,38 +115,7 @@ const payToMint = async () => {
    }))
    .reverse()
 
-
-
-    //   await contract.loadNfts();
-    window.location.reload();
-
-    } catch (error) {
-      reportError(error)
-    }
-   }
-
-
-//    Loading Nfts
-
-const loadNfts = async () => {
-    try {
-      if (!ethereum) return alert('Please install Metamask')
    
-      const contract = getEtheriumContract()
-      const nfts = await contract.getAllNFTs()
-   
-      setGlobalState('nfts', structuredNfts(nfts))
-    } catch (error) {
-      reportError(error)
-    }
-   }
-
-//  error reporting 
-const reportError = (error) => {
-    console.log(error.message)
-    throw new Error('No ethereum object.')
-   }
-
    export {
     isWallectConnected,
     connectWallet,

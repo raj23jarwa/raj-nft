@@ -5,11 +5,12 @@ import Header from "./components/Header"
 import Hero from "./components/Hero"
 import Loader from "./components/Loader"
 import { useEffect } from "react"
-import { isWallectConnected } from "./Minting"
+import { isWallectConnected, loadNfts } from "./Minting"
 
 const App = () => {
-  useEffect(() => {
-  isWallectConnected().then(()=>console.log("Blockchain is loaded"))
+  useEffect(async() => {
+  await isWallectConnected().then(()=>console.log("Blockchain is loaded"))
+  await loadNfts()
   }, [])
   
   return (

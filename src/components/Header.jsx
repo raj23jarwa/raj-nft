@@ -2,7 +2,8 @@ import ethLogo from '../assets/ethlogo.png';
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
-
+import { connectWallet } from '../Minting';
+import { truncate, useGlobalState } from '../store';
 const Header = () => {
     const [nav, setNav] = useState(false);
 
@@ -20,13 +21,14 @@ const Header = () => {
             link: "Community",
         },
     ];
+    const [connectedAccount] = useGlobalState('connectedAccount')
 
     return (
         <div className="flex justify-between items-center gradient w-full h-16 px-4 text-white fixed">
             <div className='flex items-center'>
                 <div className="flex items-center">
                     <img src={ethLogo} alt="logo" className="w-8" />
-                    <span className="text-2xl font-signature ml-2">Minting - Dapp</span>
+                    <span className="text-2xl font-signature ml-2 whitespace-nowrap">Minting - Dapp</span>
                 </div>
                 <div className="hidden md:flex items-center gap-96 justify-end ml-96">
                     <ul className="hidden md:flex">
@@ -41,9 +43,16 @@ const Header = () => {
                             </li>
                         ))}
                     </ul>
-                    <button className="shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full cursor-pointer">
+
+                    {/* If my wallet is connected and vice versa */}
+                    
+                    {connectedAccount ? ( <button className="shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full cursor-pointer" onClick={connectWallet}>
+                       {truncate(connectedAccount,4,4,11)}
+                    </button>) : ( 
+                        <button className="shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full cursor-pointer" onClick={connectWallet}>
                         Connect Wallet
-                    </button>
+                    </button>)}
+                   
                 </div>
             </div>
             <div
@@ -71,9 +80,12 @@ const Header = () => {
                             </li>
                         ))}
                         <li className="px-4 cursor-pointer capitalize py-6 text-3xl">
-                            <button className="shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full cursor-pointer" onClick={() => { setNav(!nav); /* Your Connect Wallet logic */ }}>
-                                Connect Wallet
-                            </button>
+                        {connectedAccount ? ( <button className="shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2 rounded-full cursor-pointer" onClick={connectWallet}>
+                       {truncate(connectedAccount,4,4,11)}
+                    </button>) : ( 
+                        <button className="shadow-lg shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-3xl p-2 rounded-full cursor-pointer" onClick={connectWallet}>
+                        Connect Wallet
+                    </button>)}
                         </li>
                     </ul>
                 </div>

@@ -1,10 +1,14 @@
 const { ethers } = require('hardhat')
+// const { ethers, JsonRpcProvider } = require('ethers');
+
 const fs = require('fs')
 
 async function main() {
-  const contract_name = ''
-  const Contract = await ethers.getContractFactory(contract_name)
-  const contract = await Contract.deploy()
+    const base_uri = 'https://ipfs.io/ipfs/QmTWbe9wDns7aqZQNCuWh5PqybGbBF91kngC5Zf8qmCoyg/';
+    
+  const contract_name = 'minting';
+  const Contract = await ethers.getContractFactory(contract_name);
+  const contract = await Contract.deploy('rajnft','RJM',base_uri);
 
   await contract.deployed()
 
